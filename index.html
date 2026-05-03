@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deeptaneel Dey — Software Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0A0A0A;
+    --bg2: #111111;
+    --bg3: #181818;
+    --border: #222222;
+    --border2: #2A2A2A;
+    --text: #E8E4DC;
+    --muted: #666660;
+    --accent: #C8A96E;
+    --accent2: #8B6F3E;
+    --white: #F5F0E8;
+    --red: #C94B3A;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s ease;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    width: 32px; height: 32px;
+    border: 1px solid rgba(200,169,110,0.4);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transition: all 0.1s ease;
+  }
+
+  /* Noise overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 3rem;
+    border-bottom: 1px solid transparent;
+    transition: all 0.4s ease;
+    backdrop-filter: blur(0px);
+  }
+  nav.scrolled {
+    border-bottom-color: var(--border);
+    backdrop-filter: blur(20px);
+    background: rgba(10,10,10,0.8);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--white);
+    letter-spacing: 0.02em;
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--accent2);
+    padding: 0.5rem 1.25rem;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .nav-cta:hover {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 8rem 3rem 5rem;
+    position: relative;
+    z-index: 2;
+  }
+  .hero-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .hero-tag::before {
+    content: '';
+    display: block;
+    width: 2rem;
+    height: 1px;
+    background: var(--accent);
+  }
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 6vw, 5.5rem);
+    line-height: 1.05;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 0.25rem;
+  }
+  .hero-name em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .hero-role {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    font-style: italic;
+    color: var(--muted);
+    margin-bottom: 2rem;
+  }
+  .hero-desc {
+    font-size: 0.95rem;
+    color: var(--muted);
+    max-width: 380px;
+    line-height: 1.8;
+    margin-bottom: 3rem;
+  }
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+  .btn-primary {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--accent);
+    color: var(--bg);
+    padding: 0.85rem 2rem;
+    text-decoration: none;
+    transition: all 0.2s;
+    font-weight: 500;
+  }
+  .btn-primary:hover { background: var(--white); }
+  .btn-secondary {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .btn-secondary:hover { color: var(--white); }
+
+  .hero-right {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+    border-left: 1px solid var(--border);
+  }
+  .hero-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+    justify-content: stretch;
+  }
+  .stat-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2.5rem 3.5rem;
+    border-bottom: 1px solid var(--border);
+    opacity: 0;
+    transform: translateX(20px);
+    animation: fadeInRight 0.6s ease forwards;
+  }
+  .stat-item:last-child { border-bottom: none; }
+  .stat-item:nth-child(1) { animation-delay: 0.3s; }
+  .stat-item:nth-child(2) { animation-delay: 0.5s; }
+  .stat-item:nth-child(3) { animation-delay: 0.7s; }
+  .stat-item:nth-child(4) { animation-delay: 0.9s; }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .hero-line {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+  }
+  .hero-scroll {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 2rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    animation: pulse 2s ease-in-out infinite;
+    z-index: 3;
+  }
+
+  /* ABOUT / MARQUEE */
+  .marquee-section {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+    padding: 1.2rem 0;
+    background: var(--bg2);
+  }
+  .marquee-track {
+    display: flex;
+    gap: 3rem;
+    animation: marquee 25s linear infinite;
+    width: max-content;
+  }
+  .marquee-item {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  .marquee-item span { color: var(--accent); font-size: 0.5rem; }
+
+  /* EXPERIENCE */
+  .section {
+    padding: 7rem 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+  }
+  .section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    font-weight: 700;
+    color: var(--white);
+  }
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    align-self: center;
+  }
+
+  .exp-list { display: flex; flex-direction: column; }
+  .exp-item {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 2.5rem;
+    padding: 3rem 0 3rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    transition: all 0.3s;
+  }
+  .exp-item:hover { background: rgba(200,169,110,0.02); }
+  .exp-item::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 2px;
+    background: transparent;
+    transition: background 0.3s;
+    border-radius: 1px;
+  }
+  .exp-item:hover::before { background: var(--accent); }
+
+  .exp-meta { padding-top: 0.2rem; }
+  .exp-period {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+  .exp-company {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--accent);
+    margin-bottom: 0.25rem;
+  }
+  .exp-location {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+  .exp-role {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+  .exp-desc {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+  }
+  .exp-wins {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+  .exp-win {
+    display: flex;
+    flex-direction: row;
+    gap: 0.65rem;
+    font-size: 0.875rem;
+    color: var(--text);
+    line-height: 1.65;
+    align-items: flex-start;
+  }
+  .exp-arrow {
+    color: var(--accent);
+    flex-shrink: 0;
+    flex-grow: 0;
+    line-height: 1.65;
+    display: inline-block;
+  }
+  .exp-win-text {
+    flex: 1;
+    min-width: 0;
+  }
+  .hl {
+    color: #F5F0E8;
+    font-weight: 500;
+  }
+  .exp-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.75rem;
+    border: 1px solid var(--border2);
+    color: var(--muted);
+    transition: all 0.2s;
+  }
+  .tag:hover {
+    border-color: var(--accent2);
+    color: var(--accent);
+  }
+
+  /* SKILLS */
+  .skills-section {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .skills-section .section {
+    padding-bottom: 0;
+  }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    border: 1px solid var(--border);
+  }
+  .skill-cat {
+    padding: 2.5rem 3rem;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .skill-cat:nth-child(2n) {
+    border-right: none;
+  }
+  .skill-cat:nth-last-child(-n+2) {
+    border-bottom: none;
+  }
+  .skill-cat-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .skill-cat-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border2);
+  }
+  .skill-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .skill-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.875rem;
+    color: var(--text);
+  }
+  .skill-bar {
+    width: 70px;
+    min-width: 70px;
+    height: 2px;
+    background: var(--border2);
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .skill-fill {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    background: var(--accent);
+    animation: fillBar 1s ease forwards;
+    width: 0;
+  }
+
+  /* ACHIEVEMENTS */
+  .achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  .ach-card {
+    border: 1px solid var(--border);
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+  .ach-card:hover { border-color: var(--accent2); }
+  .ach-card::before {
+    content: attr(data-num);
+    position: absolute;
+    top: -1rem;
+    right: 1.5rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem;
+    font-weight: 700;
+    color: var(--border);
+    line-height: 1;
+    transition: color 0.3s;
+  }
+  .ach-card:hover::before { color: var(--border2); }
+  .ach-icon {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+  .ach-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+  }
+  .ach-desc {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  .ach-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-top: 1.25rem;
+  }
+
+  /* CONTACT */
+  .contact-section {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+  }
+  .contact-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 7rem 3rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: start;
+  }
+  .contact-left .big-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+  .contact-left .big-text em { font-style: italic; color: var(--accent); }
+  .contact-left p {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 360px;
+  }
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .contact-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--border);
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .contact-link:hover .cl-arrow { transform: translateX(6px); color: var(--accent); }
+  .contact-link:hover .cl-label { color: var(--white); }
+  .contact-link:first-child { border-top: 1px solid var(--border); }
+  .cl-type {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.25rem;
+  }
+  .cl-label {
+    font-size: 0.95rem;
+    color: var(--text);
+    transition: color 0.2s;
+  }
+  .cl-arrow {
+    color: var(--muted);
+    font-size: 1.1rem;
+    transition: all 0.2s;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 100%;
+  }
+  .footer-copy {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+  }
+  .footer-built {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+  .footer-built span { color: var(--accent); }
+
+  /* ANIMATIONS */
+  @keyframes fadeInRight {
+    from { opacity: 0; transform: translateX(20px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+  @keyframes fillBar {
+    from { width: 0; }
+    to { width: var(--w); }
+  }
+
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* highlight bar on hero name */
+  .hero-name-wrap {
+    opacity: 0;
+    animation: fadeInUp 0.8s ease 0.1s forwards;
+  }
+  .hero-tag-wrap {
+    opacity: 0;
+    animation: fadeInUp 0.6s ease forwards;
+  }
+  .hero-desc-wrap {
+    opacity: 0;
+    animation: fadeInUp 0.6s ease 0.4s forwards;
+  }
+  .hero-actions-wrap {
+    opacity: 0;
+    animation: fadeInUp 0.6s ease 0.6s forwards;
+  }
+
+  /* ─── MOBILE HAMBURGER ──────────────────────────────────────── */
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+  }
+  .nav-hamburger span {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: var(--text);
+    transition: all 0.3s ease;
+  }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(10,10,10,0.97);
+    z-index: 99;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2.5rem;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--white);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .mobile-menu a:hover { color: var(--accent); }
+  .mobile-menu .mob-cta {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--accent2);
+    padding: 0.75rem 2rem;
+    margin-top: 1rem;
+  }
+
+  /* ─── RESPONSIVE BREAKPOINTS ────────────────────────────────── */
+  @media (max-width: 900px) {
+    /* Nav */
+    nav { padding: 1.25rem 1.5rem; }
+    .nav-links, .nav-cta { display: none; }
+    .nav-hamburger { display: flex; }
+
+    /* Hero — stack vertically */
+    .hero {
+      grid-template-columns: 1fr;
+      min-height: auto;
+    }
+    .hero-left {
+      padding: 7rem 1.5rem 3rem;
+      justify-content: flex-start;
+    }
+    .hero-right {
+      border-left: none;
+      border-top: 1px solid var(--border);
+    }
+    .hero-stats {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+    .stat-item {
+      flex: 1 1 50%;
+      border-right: 1px solid var(--border);
+      padding: 1.75rem 1.5rem;
+    }
+    .stat-item:nth-child(2n) { border-right: none; }
+    .stat-item:nth-child(3),
+    .stat-item:nth-child(4) { border-bottom: none; }
+    .stat-num { font-size: 2.2rem; }
+    .hero-scroll { display: none; }
+    .hero-line { display: none; }
+
+    /* Sections */
+    .section { padding: 4rem 1.5rem; }
+
+    /* Experience */
+    .exp-item {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+      padding: 2rem 0 2rem 1rem;
+    }
+    .exp-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
+      align-items: baseline;
+      padding-top: 0;
+    }
+    .exp-period { margin-bottom: 0; }
+    .exp-role { font-size: 1.2rem; margin-top: 0.25rem; }
+
+    /* Skills grid — 1 col on mobile */
+    .skills-grid {
+      grid-template-columns: 1fr;
+    }
+    .skill-cat {
+      border-right: none;
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 1.5rem;
+    }
+    .skill-cat:nth-child(2n) { border-right: none; }
+    .skill-cat:nth-last-child(-n+2) { border-bottom: 1px solid var(--border); }
+    .skill-cat:last-child { border-bottom: none; }
+
+    /* Achievements — 1 col on mobile */
+    .achievements-grid {
+      grid-template-columns: 1fr;
+    }
+    .ach-card { padding: 2rem; }
+
+    /* Contact */
+    .contact-inner {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      padding: 4rem 1.5rem;
+    }
+    .contact-left p { max-width: 100%; }
+
+    /* Footer */
+    footer {
+      flex-direction: column;
+      gap: 0.5rem;
+      text-align: center;
+      padding: 1.5rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero-left { padding: 6rem 1.25rem 2.5rem; }
+    .hero-name { font-size: clamp(2.8rem, 12vw, 4rem); }
+    .stat-item { flex: 1 1 100%; border-right: none; }
+    .stat-item:last-child { border-bottom: none; }
+    .section { padding: 3rem 1.25rem; }
+    .exp-item { padding: 1.75rem 0 1.75rem 0.75rem; }
+    .ach-card { padding: 1.5rem; }
+    .contact-inner { padding: 3rem 1.25rem; }
+    .contact-left .big-text { font-size: clamp(2rem, 10vw, 3rem); }
+    .skill-cat { padding: 1.5rem 1.25rem; }
+    .section-header { margin-bottom: 2.5rem; }
+  }
+
+  @media (hover: none) {
+    /* Touch devices — disable cursor */
+    body { cursor: auto; }
+    .cursor, .cursor-ring { display: none; }
+  }
+
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">D<span>.</span>Dey</a>
+  <ul class="nav-links">
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#achievements">Achievements</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="mailto:deeptaneeld@gmail.com" class="nav-cta">Hire me</a>
+  <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#experience" onclick="closeMobileMenu()">Experience</a>
+  <a href="#skills" onclick="closeMobileMenu()">Skills</a>
+  <a href="#achievements" onclick="closeMobileMenu()">Achievements</a>
+  <a href="#contact" onclick="closeMobileMenu()">Contact</a>
+  <a href="mailto:deeptaneeld@gmail.com" class="mob-cta" onclick="closeMobileMenu()">Hire me</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag-wrap">
+      <div class="hero-tag">Available for opportunities</div>
+    </div>
+    <div class="hero-name-wrap">
+      <h1 class="hero-name">Deeptaneel<br><em>Dey</em></h1>
+      <p class="hero-role">Senior Software Engineer</p>
+    </div>
+    <div class="hero-desc-wrap">
+      <p class="hero-desc">Building production-grade systems in C#/.NET across enterprise SaaS, medical imaging, and endpoint management. 4+ years of shipping software that scales.</p>
+    </div>
+    <div class="hero-actions-wrap">
+      <div class="hero-actions">
+        <a href="mailto:deeptaneeld@gmail.com" class="btn-primary">Get in touch</a>
+        <a href="https://www.linkedin.com/in/deeptaneel-dey-213091193" target="_blank" class="btn-secondary">LinkedIn ↗</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll">Scroll</div>
+  <div class="hero-right">
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">99.6%</div>
+        <div class="stat-label">Performance gain — 4hrs to &lt;1 min</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">4+</div>
+        <div class="stat-label">Years in production engineering</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Product companies shipped at scale</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">&#x23;</div>
+        <div class="stat-label">National hackathon winner — SIH 2020</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-line"></div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <div class="marquee-item">C# <span>◆</span></div>
+    <div class="marquee-item">.NET Core <span>◆</span></div>
+    <div class="marquee-item">Windows Systems <span>◆</span></div>
+    <div class="marquee-item">Entity Framework <span>◆</span></div>
+    <div class="marquee-item">Azure <span>◆</span></div>
+    <div class="marquee-item">CI/CD <span>◆</span></div>
+    <div class="marquee-item">TDD <span>◆</span></div>
+    <div class="marquee-item">OAuth 2.0 <span>◆</span></div>
+    <div class="marquee-item">REST APIs <span>◆</span></div>
+    <div class="marquee-item">WPF · MVVM <span>◆</span></div>
+    <div class="marquee-item">Agentic AI <span>◆</span></div>
+    <div class="marquee-item">Claude API <span>◆</span></div>
+    <div class="marquee-item">SQL Server <span>◆</span></div>
+    <div class="marquee-item">PowerShell <span>◆</span></div>
+    <div class="marquee-item">System Design <span>◆</span></div>
+    <div class="marquee-item">DICOM <span>◆</span></div>
+    <div class="marquee-item">C# <span>◆</span></div>
+    <div class="marquee-item">.NET Core <span>◆</span></div>
+    <div class="marquee-item">Windows Systems <span>◆</span></div>
+    <div class="marquee-item">Entity Framework <span>◆</span></div>
+    <div class="marquee-item">Azure <span>◆</span></div>
+    <div class="marquee-item">CI/CD <span>◆</span></div>
+    <div class="marquee-item">TDD <span>◆</span></div>
+    <div class="marquee-item">OAuth 2.0 <span>◆</span></div>
+    <div class="marquee-item">REST APIs <span>◆</span></div>
+    <div class="marquee-item">WPF · MVVM <span>◆</span></div>
+    <div class="marquee-item">Agentic AI <span>◆</span></div>
+    <div class="marquee-item">Claude API <span>◆</span></div>
+    <div class="marquee-item">SQL Server <span>◆</span></div>
+    <div class="marquee-item">PowerShell <span>◆</span></div>
+    <div class="marquee-item">System Design <span>◆</span></div>
+    <div class="marquee-item">DICOM <span>◆</span></div>
+  </div>
+</div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section">
+    <div class="section-header fade-up">
+      <span class="section-num">01</span>
+      <h2 class="section-title">Experience</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="exp-list">
+
+      <div class="exp-item fade-up">
+        <div class="exp-meta">
+          <div class="exp-period">Dec 2024 — Present</div>
+          <div class="exp-company">Omnissa, Inc.</div>
+          <div class="exp-location">Bengaluru, India</div>
+        </div>
+        <div class="exp-content">
+          <div class="exp-role">Member of Technical Staff</div>
+          <p class="exp-desc">Sole code owner of the scripts and sensors module in an enterprise endpoint management platform. Own the full lifecycle — architecture, development, production health, and live customer escalations.</p>
+          <div class="exp-wins">
+            <div class="exp-win"><span class="exp-arrow">→</span><span class="exp-win-text">Drove an architectural overhaul of the sensor execution pipeline, cutting runtime from ~4 hours to under 1 minute — a 99.6% reduction — directly improving reliability for enterprise Windows device fleet customers at scale</span></div>
+            <div class="exp-win"><span class="exp-arrow">→</span><span class="exp-win-text">Architected UEM Certificate Management fix after a breaking Microsoft platform change, unblocking certificate issuance for thousands of domain-joined enterprise devices — received <span class="hl">org-level recognition, Nov 2025</span></span></div>
+            <div class="exp-win"><span class="exp-arrow">→</span><span class="exp-win-text">Shipped 3+ major feature releases; resolved multiple P0/P1 production escalations within SLA; mentored 2 junior engineers</span></div>
+          </div>
+          <div class="exp-tags">
+            <span class="tag">C#</span><span class="tag">.NET</span><span class="tag">Windows Internals</span><span class="tag">PowerShell</span><span class="tag">Azure</span><span class="tag">CI/CD</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-item fade-up">
+        <div class="exp-meta">
+          <div class="exp-period">Aug 2023 — Dec 2024</div>
+          <div class="exp-company">Siemens Healthineers</div>
+          <div class="exp-location">Bengaluru, India</div>
+        </div>
+        <div class="exp-content">
+          <div class="exp-role">Engineer — Design & Development</div>
+          <p class="exp-desc">Delivered production-grade features for clinical-grade medical imaging software in a regulated environment, where correctness is non-negotiable.</p>
+          <div class="exp-wins">
+            <div class="exp-win"><span class="exp-arrow">→</span><span class="exp-win-text">Built DICOM-compliant imaging features in C#/.NET/WPF (MVVM), reducing image load latency for radiologists while meeting regulatory standards</span></div>
+            <div class="exp-win"><span class="exp-arrow">→</span><span class="exp-win-text">Championed TDD adoption; overhauled CI/CD pipeline, improving build reliability for a safety-critical medical product</span></div>
+            <div class="exp-win"><span class="exp-arrow">→</span><span class="exp-win-text"><span class="hl">Spot Award recipient</span> (Jul 2024) for high-quality delivery during a critical cross-functional sprint</span></div>
+          </div>
+          <div class="exp-tags">
+            <span class="tag">C#</span><span class="tag">WPF</span><span class="tag">MVVM</span><span class="tag">DICOM</span><span class="tag">TDD</span><span class="tag">SpecFlow</span><span class="tag">CI/CD</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-item fade-up">
+        <div class="exp-meta">
+          <div class="exp-period">Jul 2021 — Aug 2023</div>
+          <div class="exp-company">Odessa, Inc.</div>
+          <div class="exp-location">Bengaluru, India</div>
+        </div>
+        <div class="exp-content">
+          <div class="exp-role">Software Engineer</div>
+          <p class="exp-desc">Built and shipped backend features on LeaseWave — a large-scale fintech SaaS platform serving major financial institutions globally.</p>
+          <div class="exp-wins">
+            <div class="exp-win"><span class="exp-arrow">→</span><span class="exp-win-text">Integrated <span class="hl">OAuth 2.0 / OpenID Connect</span>, replacing legacy auth and eliminating security vulnerabilities across the platform</span></div>
+            <div class="exp-win"><span class="exp-arrow">→</span><span class="exp-win-text">Optimised T-SQL stored procedures for financial data queries handling millions of records — measurable response time improvements</span></div>
+            <div class="exp-win"><span class="exp-arrow">→</span><span class="exp-win-text">Led end-to-end release cycles with zero-downtime deployments for enterprise financial clients</span></div>
+          </div>
+          <div class="exp-tags">
+            <span class="tag">C#</span><span class="tag">.NET</span><span class="tag">Entity Framework</span><span class="tag">T-SQL</span><span class="tag">OAuth 2.0</span><span class="tag">REST APIs</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="skills-section">
+  <div class="section">
+    <div class="section-header fade-up">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Skills</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-cat fade-up">
+        <div class="skill-cat-title">Core Stack</div>
+        <div class="skill-items">
+          <div class="skill-item"><span>C# / .NET</span><div class="skill-bar"><div class="skill-fill" style="--w:95%"></div></div></div>
+          <div class="skill-item"><span>ASP.NET Core</span><div class="skill-bar"><div class="skill-fill" style="--w:88%"></div></div></div>
+          <div class="skill-item"><span>WPF / MVVM</span><div class="skill-bar"><div class="skill-fill" style="--w:85%"></div></div></div>
+          <div class="skill-item"><span>Entity Framework</span><div class="skill-bar"><div class="skill-fill" style="--w:90%"></div></div></div>
+          <div class="skill-item"><span>T-SQL / SQL Server</span><div class="skill-bar"><div class="skill-fill" style="--w:82%"></div></div></div>
+        </div>
+      </div>
+      <div class="skill-cat fade-up">
+        <div class="skill-cat-title">Systems & Protocols</div>
+        <div class="skill-items">
+          <div class="skill-item"><span>Windows Internals</span><div class="skill-bar"><div class="skill-fill" style="--w:88%"></div></div></div>
+          <div class="skill-item"><span>OAuth 2.0 / OIDC</span><div class="skill-bar"><div class="skill-fill" style="--w:85%"></div></div></div>
+          <div class="skill-item"><span>REST API Design</span><div class="skill-bar"><div class="skill-fill" style="--w:90%"></div></div></div>
+          <div class="skill-item"><span>DICOM</span><div class="skill-bar"><div class="skill-fill" style="--w:75%"></div></div></div>
+          <div class="skill-item"><span>PowerShell</span><div class="skill-bar"><div class="skill-fill" style="--w:80%"></div></div></div>
+        </div>
+      </div>
+      <div class="skill-cat fade-up">
+        <div class="skill-cat-title">AI & Automation</div>
+        <div class="skill-items">
+          <div class="skill-item"><span>Claude API</span><div class="skill-bar"><div class="skill-fill" style="--w:85%"></div></div></div>
+          <div class="skill-item"><span>Agentic Workflows</span><div class="skill-bar"><div class="skill-fill" style="--w:80%"></div></div></div>
+          <div class="skill-item"><span>Prompt Engineering</span><div class="skill-bar"><div class="skill-fill" style="--w:82%"></div></div></div>
+          <div class="skill-item"><span>Python</span><div class="skill-bar"><div class="skill-fill" style="--w:72%"></div></div></div>
+          <div class="skill-item"><span>MCP Protocol</span><div class="skill-bar"><div class="skill-fill" style="--w:70%"></div></div></div>
+        </div>
+      </div>
+      <div class="skill-cat fade-up">
+        <div class="skill-cat-title">DevOps & Tooling</div>
+        <div class="skill-items">
+          <div class="skill-item"><span>CI/CD Pipelines</span><div class="skill-bar"><div class="skill-fill" style="--w:85%"></div></div></div>
+          <div class="skill-item"><span>Azure</span><div class="skill-bar"><div class="skill-fill" style="--w:75%"></div></div></div>
+          <div class="skill-item"><span>Git / TFS</span><div class="skill-bar"><div class="skill-fill" style="--w:92%"></div></div></div>
+          <div class="skill-item"><span>TDD / SpecFlow</span><div class="skill-bar"><div class="skill-fill" style="--w:82%"></div></div></div>
+          <div class="skill-item"><span>System Design</span><div class="skill-bar"><div class="skill-fill" style="--w:78%"></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section id="achievements">
+  <div class="section">
+    <div class="section-header fade-up">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Achievements</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="achievements-grid">
+      <div class="ach-card fade-up" data-num="01">
+        <div class="ach-icon">Omnissa · Org Recognition</div>
+        <div class="ach-title">Critical Infrastructure Fix — Microsoft Platform Change</div>
+        <div class="ach-desc">Architected UEM Certificate Management updates in response to a breaking Microsoft platform change, unblocking certificate issuance for thousands of domain-joined enterprise devices using Computer SID. Recognised at the org level for impact.</div>
+        <div class="ach-date">November 2025</div>
+      </div>
+      <div class="ach-card fade-up" data-num="02">
+        <div class="ach-icon">Omnissa · Performance</div>
+        <div class="ach-title">99.6% Reduction in Sensor Execution Time</div>
+        <div class="ach-desc">Reduced the end-to-end sensor execution pipeline from approximately 4 hours to under 1 minute through targeted algorithmic restructuring and I/O optimisations — directly improving experience for enterprise customers at scale.</div>
+        <div class="ach-date">2025</div>
+      </div>
+      <div class="ach-card fade-up" data-num="03">
+        <div class="ach-icon">Siemens Healthineers · Spot Award</div>
+        <div class="ach-title">Spot Award for Cross-Functional Impact</div>
+        <div class="ach-desc">Recognised for high-quality technical delivery and measurable cross-functional impact during a critical product sprint in a regulated medical imaging environment.</div>
+        <div class="ach-date">July 2024</div>
+      </div>
+      <div class="ach-card fade-up" data-num="04">
+        <div class="ach-icon">Smart India Hackathon · National Winner</div>
+        <div class="ach-title">SIH 2020 — National Winner, Software Edition</div>
+        <div class="ach-desc">Won the national-level government hackathon against thousands of competing teams. Built a Proxy/VPN detection system for BPRD (Bureau of Police Research & Development) using Node.js, Python, React, and MongoDB.</div>
+        <div class="ach-date">May 2020</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
+  <div class="contact-inner">
+    <div class="contact-left fade-up">
+      <div class="big-text">Let's build something <em>great</em> together.</div>
+      <p>Open to Senior SWE / MTS roles at product-first companies in Bengaluru or Remote. Reach out and let's talk.</p>
+    </div>
+    <div class="contact-links fade-up">
+      <a href="mailto:deeptaneeld@gmail.com" class="contact-link">
+        <div>
+          <div class="cl-type">Email</div>
+          <div class="cl-label">deeptaneeld@gmail.com</div>
+        </div>
+        <span class="cl-arrow">→</span>
+      </a>
+      <a href="https://www.linkedin.com/in/deeptaneel-dey-213091193" target="_blank" class="contact-link">
+        <div>
+          <div class="cl-type">LinkedIn</div>
+          <div class="cl-label">linkedin.com/in/deeptaneel-dey</div>
+        </div>
+        <span class="cl-arrow">→</span>
+      </a>
+      <a href="tel:+917003297265" class="contact-link">
+        <div>
+          <div class="cl-type">Phone</div>
+          <div class="cl-label">+91 7003297265</div>
+        </div>
+        <span class="cl-arrow">→</span>
+      </a>
+      <a href="#" class="contact-link">
+        <div>
+          <div class="cl-type">Location</div>
+          <div class="cl-label">Bengaluru, India · Open to Remote</div>
+        </div>
+        <span class="cl-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-copy">© 2026 Deeptaneel Dey. All rights reserved.</div>
+  <div class="footer-built">Built with <span>precision</span> · Bengaluru, India</div>
+</footer>
+
+<script>
+  // Cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{
+    mx=e.clientX; my=e.clientY;
+    cursor.style.left=(mx-4)+'px';
+    cursor.style.top=(my-4)+'px';
+  });
+  function animRing(){
+    rx+=(mx-rx-16)*0.12;
+    ry+=(my-ry-16)*0.12;
+    ring.style.left=rx+'px';
+    ring.style.top=ry+'px';
+    requestAnimationFrame(animRing);
+  }
+  animRing();
+  document.querySelectorAll('a,button').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{cursor.style.transform='scale(2.5)';});
+    el.addEventListener('mouseleave',()=>{cursor.style.transform='scale(1)';});
+  });
+
+  // Nav scroll
+  const nav=document.getElementById('nav');
+  window.addEventListener('scroll',()=>{
+    nav.classList.toggle('scrolled',window.scrollY>60);
+  });
+
+  // Fade-up observer
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('visible'); }
+    });
+  },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+
+  // Skill bars trigger on scroll
+  const barObs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.querySelectorAll('.skill-fill').forEach(f=>{
+          f.style.width=f.style.getPropertyValue('--w')||f.style.cssText.match(/--w:([\d.]+%)/)?.[1]||'0%';
+        });
+      }
+    });
+  },{threshold:0.3});
+  document.querySelectorAll('.skills-grid').forEach(el=>barObs.observe(el));
+
+  // Mobile menu
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  });
+  function closeMobileMenu() {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+</script>
+</body>
+</html>
